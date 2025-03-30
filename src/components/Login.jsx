@@ -7,6 +7,7 @@ import { BASE_URL } from '../utils/constants';
 const Login = () => {
   const [emailId, setEmailID] = useState('singh@gmail.com');
   const [password, setPassword] = useState('Sagar@123');
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogin = async () => {
@@ -22,6 +23,8 @@ const Login = () => {
       dispatch(addUser(res.data));
       return navigate('/');
     } catch (error) {
+      // setError(error.message);
+      setError(error?.response?.data || 'Something went wrong!');
       console.error(error);
     }
   };
@@ -50,6 +53,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </fieldset>
+          <p className="text-red-500 ">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
